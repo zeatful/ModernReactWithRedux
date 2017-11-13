@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+// class based component
 class SearchBar extends Component {
   render() {
-    return <input />;
+    // bind the on change event to the onInputChange event handler
+    return <input onChange={this.onInputChange}/>;
+  }
+
+  // even handler for the on change event
+  onInputChange(event) {
+    console.log(event.target.value);
   }
 }
 
