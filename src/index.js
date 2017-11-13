@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; // used to create and manage components
 import ReactDOM from 'react-dom'; // used to manipulate the DOM
 import YTSearch from 'youtube-api-search';
+import _ from 'lodash';
 
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
@@ -17,7 +18,11 @@ class App extends Component {
       selectedVideo: null
     };
 
-    YTSearch({ key: API_KEY, term: 'games' }, videos => {
+    this.videoSearch('surfboards');
+  }
+
+  videoSearch(term){
+    YTSearch({ key: API_KEY, term: term }, videos => {
       // ES6, if key and property are same variable name, reduces to just the key
       this.setState({ 
         videos: videos,
@@ -28,9 +33,12 @@ class App extends Component {
   
   // pass videos property to video list
   render() {
+    // debounce returns a new function that wraps the supplied which can only be called every 300 milliseconds
+    const videoSearch = _.debounce(term => { this.videoSearch(term)}, 300);
+    
     return (
       <div>
-        <SearchBar />
+        <SearchBar onSearchTermChange={ videoSearch }/>
         <VideoDetail video={ this.state.selectedVideo }/>
         <VideoList 
           onVideoSelect={ selectedVideo => this.setState({ selectedVideo }) }
