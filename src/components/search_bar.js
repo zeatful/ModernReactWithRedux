@@ -17,7 +17,7 @@ class SearchBar extends Component {
     // value set by state makes a controlled component, the value only updates when state changes
     // a controlled component always us to avoid using jquery to update elements
     return (
-      <div>
+      <div className="search-bar">
         <input 
           value={this.state.term}
           onChange={event => this.setState({ term: event.target.value })}/>
